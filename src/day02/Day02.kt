@@ -4,7 +4,7 @@ data class Game(val id: Int, val red: Int, val green: Int, val blue: Int) {
   fun multiply() = red * green * blue
 }
 
-fun parseInput(input: String): Game {
+private fun parseInput(input: String): Game {
   val id = input.substringBefore(":").substringAfter(" ").toInt()
   val colors = mutableMapOf<String, Int>()
   input.substringAfter(": ").split("; ").forEach { turn ->

@@ -20,7 +20,10 @@ class PartNumber {
   fun toInt() = number.joinToString("").toInt()
 }
 
-fun parseText(input: List<String>, isGear: Boolean = false): Pair<Set<PartNumber>, Set<Coords>> {
+private fun parseInput(
+    input: List<String>,
+    isGear: Boolean = false
+): Pair<Set<PartNumber>, Set<Coords>> {
   val numbers = mutableSetOf<PartNumber>()
   val symbols = mutableSetOf<Coords>()
   var currentNumber = PartNumber()
@@ -47,12 +50,12 @@ fun parseText(input: List<String>, isGear: Boolean = false): Pair<Set<PartNumber
 
 fun main() {
   fun part1(input: List<String>): Int {
-    val (numbers, symbols) = parseText(input)
+    val (numbers, symbols) = parseInput(input)
     return numbers.filter { it.locations.intersect(symbols).isNotEmpty() }.sumOf { it.toInt() }
   }
 
   fun part2(input: List<String>): Int {
-    val (numbers, symbols) = parseText(input, true)
+    val (numbers, symbols) = parseInput(input, true)
     return symbols.sumOf { symbol ->
       val neighbors = numbers.filter { symbol in it.locations }
       if (neighbors.size == 2) neighbors[0].toInt() * neighbors[1].toInt() else 0
