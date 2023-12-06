@@ -7,15 +7,19 @@ fun parseRace(input: List<String>): Race {
   return Race(times.joinToString("").toLong(), distances.joinToString("").toLong())
 }
 
+fun List<String>.parseData(): List<List<String>> = map {
+  it.split(" ").filter { it.isNotBlank() }.drop(1)
+}
+
 fun main() {
   fun part1(input: List<String>): Int {
-    val (times, distances) = input.map { it.split(" ").filter { it.isNotBlank() }.drop(1) }
+    val (times, distances) = input.parseData()
     val racesList = times.zip(distances).map { (t, d) -> Race(t.toLong(), d.toLong()) }
     return racesList.map { it.calculate() }.reduce { a, b -> a * b }
   }
 
   fun part2(input: List<String>): Int {
-    val (times, distances) = input.map { it.split(" ").filter { it.isNotBlank() }.drop(1) }
+    val (times, distances) = input.parseData()
     val race = Race(times.joinToString("").toLong(), distances.joinToString("").toLong())
     return race.calculate()
   }

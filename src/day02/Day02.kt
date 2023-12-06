@@ -18,21 +18,15 @@ private fun parseInput(input: String): Game {
 }
 
 fun main() {
-  fun part1(input: List<String>): Int {
-    val games: List<Game> = input.map { parseInput(it) }
-    return games.sumOf { it.isPossible() }
-  }
+  fun part1(input: List<Game>) = input.sumOf { it.isPossible() }
 
-  fun part2(input: List<String>): Int {
-    val games: List<Game> = input.map { parseInput(it) }
-    return games.sumOf { it.multiply() }
-  }
+  fun part2(input: List<Game>) = input.sumOf { it.multiply() }
 
-  val testInput = readInput("day02/test")
+  val testInput = readInput("day02/test").map { parseInput(it) }
   part1(testInput).println()
   part2(testInput).println()
 
-  val input = readInput("day02/input")
+  val input = readInput("day02/input").map { parseInput(it) }
   part1(input).println()
   part2(input).println()
 }

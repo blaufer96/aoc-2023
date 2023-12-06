@@ -17,27 +17,22 @@ private fun parseInput(input: String): Card {
 fun String.numbersToSet() = trim().split("\\s+".toRegex()).toSet()
 
 fun main() {
-  fun part1(input: List<String>): Int {
-    val cards: List<Card> = input.map { parseInput(it) }
-    return cards.map { it.numbers intersect it.winningNumbers }.sumOf {
-      2F.pow(it.size - 1).toInt()
-    }
-  }
+  fun part1(input: List<Card>): Int =
+      input.map { it.numbers intersect it.winningNumbers }.sumOf { 2F.pow(it.size - 1).toInt() }
 
-  fun part2(input: List<String>): Int {
-    val cards: List<Card> = input.map { parseInput(it) }
-    for (card in cards) {
+  fun part2(input: List<Card>): Int {
+    for (card in input) {
       val numbersCount = (card.numbers intersect card.winningNumbers).size
-      for (i in 1..numbersCount) cards.find { it.id == card.id + i }!!.count += card.count
+      for (i in 1..numbersCount) input.find { it.id == card.id + i }!!.count += card.count
     }
-    return cards.sumOf { it.count }
+    return input.sumOf { it.count }
   }
 
-  val testInput = readInput("day04/test")
+  val testInput = readInput("day04/test").map { parseInput(it) }
   part1(testInput).println()
   part2(testInput).println()
 
-  val input = readInput("day04/input")
+  val input = readInput("day04/input").map { parseInput(it) }
   part1(input).println()
   part2(input).println()
 }
