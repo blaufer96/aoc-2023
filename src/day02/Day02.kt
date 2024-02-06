@@ -19,6 +19,10 @@ fun main() {
 
   fun part2(input: List<Game>) = input.sumOf { it.multiply() }
 
+  val testInput = readInput("day02/test").map { parseInput(it) }
+  part1(testInput).println()
+  part2(testInput).println()
+
   val input = readInput("day02/input").map { parseInput(it) }
   part1(input).println()
   part2(input).println()
