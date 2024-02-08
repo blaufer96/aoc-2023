@@ -23,7 +23,9 @@ fun main() {
   fun part2(input: List<Card>): Int {
     for (card in input) {
       val numbersCount = (card.numbers intersect card.winningNumbers).size
-      for (i in 1..numbersCount) input.find { it.id == card.id + i }!!.count += card.count
+      for (i in 1..numbersCount) {
+        if (card.id + i <= input.size) input.find { it.id == card.id + i }!!.count += card.count
+      }
     }
     return input.sumOf { it.count }
   }
