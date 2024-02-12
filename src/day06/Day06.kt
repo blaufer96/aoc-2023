@@ -2,11 +2,6 @@ data class Race(val time: Long, val distance: Long) {
   fun calculate(): Int = (1..time).count { it * (time - it) > distance }
 }
 
-fun parseRace(input: List<String>): Race {
-  val (times, distances) = input.map { it.split(" ").filter { it.isNotBlank() }.drop(1) }
-  return Race(times.joinToString("").toLong(), distances.joinToString("").toLong())
-}
-
 fun List<String>.parseData(): List<List<String>> = map {
   it.split(" ").filter { it.isNotBlank() }.drop(1)
 }
