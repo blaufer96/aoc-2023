@@ -1,8 +1,12 @@
-data class MapInstructions(val instructions: String, val map: Map<String, Pair<String, String>>) {
+data class MapInstructions(
+    val instructions: String,
+    val map: Map<String, Pair<String, String>>,
+    val endNode: String
+) {
   fun countSteps(start: String): Int {
     var steps = 0
     var current = start
-    while (!current.endsWith("Z")) {
+    while (!current.endsWith(endNode)) {
       val currentVal = map.getValue(current)
       val instruction = instructions[steps++ % instructions.length]
       current = if (instruction == 'L') currentVal.first else currentVal.second
@@ -11,13 +15,13 @@ data class MapInstructions(val instructions: String, val map: Map<String, Pair<S
   }
 }
 
-private fun parseInput(input: List<String>): MapInstructions {
+private fun parseInput(input: List<String>, endNode: String): MapInstructions {
   val instructions = input.first()
   val map =
       input.drop(2).associate {
         it.substring(0..2) to Pair(it.substring(7..9), it.substring(12..14))
       }
-  return MapInstructions(instructions, map)
+  return MapInstructions(instructions, map, endNode)
 }
 
 fun Long.gcd(n: Long): Long {
@@ -33,13 +37,13 @@ fun Long.lcm(n: Long): Long = this * n / this.gcd(n)
 
 fun main() {
   fun part1(input: List<String>): Int {
-    val mapInstructions = parseInput(input)
+    val mapInstructions = parseInput(input, "ZZZ")
     return mapInstructions.countSteps("AAA")
   }
 
   fun part2(input: List<String>): Long {
-    val mapInstructions = parseInput(input)
-    return parseInput(input)
+    val mapInstructions = parseInput(input, "Z")
+    return mapInstructions
         .map
         .keys
         .filter { it.endsWith("A") }
